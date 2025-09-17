@@ -1,0 +1,16 @@
+.img {
+  border-radius: 50%;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  background-color: #1f232c;
+}

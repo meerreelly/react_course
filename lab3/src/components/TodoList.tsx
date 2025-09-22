@@ -8,12 +8,12 @@ import AddTaskForm from "./AddTaskForm";
 const ToDoList = ({ ...props }: StyleInterface) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  const deleteTask = (id: number) => {
+  const deleteTask = (id: string) => {
     setTasks(tasks.filter((task) => task.id !== id));
   };
 
   const AddTask = (title: string) => {
-    setTasks([...tasks, { id: tasks.length + 1, title }]);
+    setTasks([...tasks, { id: crypto.randomUUID(), title }]);
   };
 
   return (

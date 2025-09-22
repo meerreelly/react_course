@@ -1,5 +1,5 @@
 type Task = {
-  id: number;
+  id: string;
   title: string;
 };
 

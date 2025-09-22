@@ -7,7 +7,7 @@ import Typography from "./TypographyComponent";
 
 interface ToDoItemProps extends StyleInterface {
   task: Task;
-  onDelete?: (id: number) => void;
+  onDelete?: (id: string) => void;
 }
 
 const ToDoItem = ({ task, onDelete, ...props }: ToDoItemProps) => {

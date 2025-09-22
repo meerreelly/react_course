@@ -1,11 +1,10 @@
 import React from "react";
+import type { StyleInterface } from "../Interfaces/StyleInterface";
 
-type TypographyProps = {
+interface TypographyProps extends StyleInterface {
   variant: React.ElementType;
   children: React.ReactNode;
-  style?: React.CSSProperties;
-  className?: string;
-};
+}
 
 const Typography = ({ variant, children, ...props }: TypographyProps) => {
   const Tag: React.ElementType = variant || "p";

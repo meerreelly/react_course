@@ -14,7 +14,7 @@ export const useTodos = () => {
   });
 
   const deleteTodo = async (idToDelete: string) => {
-    mutate(data?.filter((todo) => todo._id !== idToDelete));
+    mutate(data?.filter((todo) => todo._id !== idToDelete), false);
     try {
       await fetch(`${url}/${idToDelete}`, { method: "DELETE" });
       toast.success("Todo deleted successfully");
@@ -28,7 +28,7 @@ export const useTodos = () => {
 
   const addTodo = async (title: string) => {
     const newTodo = { title, completed: false };
-    mutate([...(data || []), newTodo]);
+    mutate([...(data || []), newTodo], false);
     try {
       await fetch(url, {
         method: "POST",

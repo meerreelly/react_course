@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const url = "https://crudcrud.com/api/c3ba03ae441846d099a4227ae08da761/todos";
+const url = "https://todosreact.free.beeceptor.com/api/todos";
 
 export const useTodos = () => {
   const { data, error, isLoading } = useSWR<Task[]>(url, fetcher, {

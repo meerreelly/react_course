@@ -2,12 +2,13 @@ import type { StyleInterface } from "../Interfaces/StyleInterface";
 
 interface ButtonProps extends StyleInterface {
   onClick: () => void;
+  disabled?: boolean | false;
   children: React.ReactNode;
 }
 
-const Button = ({ onClick, children, ...props }: ButtonProps) => {
+const Button = ({ onClick, children, disabled, ...props }: ButtonProps) => {
   return (
-    <button onClick={onClick} {...props}>
+    <button onClick={onClick} disabled={disabled} {...props}>
       {children}
     </button>
   );

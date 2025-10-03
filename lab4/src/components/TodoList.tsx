@@ -4,6 +4,9 @@ import ToDoItem from "./ToDoItem";
 import AddTaskForm from "./AddTaskForm";
 import Loading from "./Loading";
 import { useTodos } from "../hooks/useTodos";
+import Paginator from "./Paginator";
+import SearchForm from "./SearchForm";
+import type { Task } from "../Types/Task";
 
 const ToDoList = ({ ...props }: StyleInterface) => {
   const {
@@ -13,6 +16,14 @@ const ToDoList = ({ ...props }: StyleInterface) => {
     deleteTodo,
     addTodo,
     updateTodo,
+    searchTerm,
+    setSearchTerm,
+    page,
+    size,
+    nextPage,
+    prevPage,
+    changeSize,
+    isLoadingMore,
   } = useTodos();
 
   if (error) {
@@ -27,8 +38,8 @@ const ToDoList = ({ ...props }: StyleInterface) => {
     await deleteTodo(id);
   };
 
-  const handleChange = async (id: string, state: boolean) => {
-    await updateTodo(id, state);
+  const handleChange = async (todo: Task) => {
+    await updateTodo(todo);
   };
 
   return (
@@ -36,7 +47,14 @@ const ToDoList = ({ ...props }: StyleInterface) => {
       <Typography variant="h1" className="text-white text-3xl mb-4 font-bold">
         To-Do List
       </Typography>
-      <AddTaskForm addTask={(title) => handleAdd(title)} />
+      <Typography
+        variant="div"
+        className="w-full flex mb-4 flrx-row gap-2 justify-center"
+      >
+        <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <AddTaskForm addTask={(title) => handleAdd(title)} />
+      </Typography>
+
       <Typography
         variant="div"
         className={
@@ -50,12 +68,20 @@ const ToDoList = ({ ...props }: StyleInterface) => {
             <ToDoItem
               key={task._id}
               task={task}
-              onDelete={(id) => handleDelete(id)}
-              onChange={(id, state) => handleChange(id, state)}
+              onDelete={handleDelete}
+              onChange={handleChange}
             />
           ))
         )}
       </Typography>
+      <Paginator
+        page={page}
+        size={size}
+        NextPage={nextPage}
+        PrevPage={prevPage}
+        ChangeSize={changeSize}
+        isLoadingMore={isLoadingMore}
+      />
     </Typography>
   );
 };

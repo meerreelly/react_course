@@ -8,7 +8,7 @@ interface InputProps extends StyleInterface {
 }
 
 const Input = ({ ...props }: InputProps) => {
-  return <input {...props} />;
+  return <input {...props}/>;
 };
 
 export default Input;

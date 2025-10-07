@@ -66,3 +66,29 @@
 
 ### Typography
 - Props: variant (React.ElementType), children, plus StyleInterface; no local state; renders Tag = variant with props.
+
+### Used Design Patterns
+
+#### Core Patterns
+
+**Custom Hook Pattern** - The `useTodos` hook serves as the central orchestrator for all data-related logic, encapsulating state management, API fetching with SWR, filtering, pagination, and mutations into a single reusable interface. This hook combines local state for `page`, `size`, `searchTerm`, and `isLoadingMore` with SWR's `data`, `error`, `isLoading`, and `mutate` to provide a unified API consumed by `ToDoList`. By isolating business logic outside components, it enhances reusability, testability, and separation of concerns, allowing presentational components to focus solely on rendering without handling data complexities.
+
+**Container/Presentational Pattern** - The architecture divides responsibilities between stateful containers and stateless presentational components to promote modularity. `ToDoList` functions as the container, integrating the `useTodos` hook for data orchestration and passing filtered data and callbacks as props to child components. Presentational components like `ToDoItem`, `AddTaskForm`, `SearchForm`, and `Paginator` receive props for rendering and interactions without accessing state or API details, enabling easier styling, reuse, and isolated testing.
+
+**Unidirectional Data Flow** - Data flows downward from parent to child via props, while updates propagate upward through callback functions to maintain predictability. In `ToDoList`, props like `tasks`, `searchTerm`, and handlers (`addTodo`, `deleteTodo`, `updateTodo`) cascade to `ToDoItem` and other children; interactions in `ToDoItem` (e.g., checkbox toggle or delete) invoke callbacks that trigger mutations in `useTodos`. This pattern avoids direct state mutation in children, centralizes updates in the hook, and simplifies debugging by enforcing clear ownership.
+
+**Component Composition Pattern** - The UI is built by assembling small, focused components into cohesive structures for better maintainability. `ToDoList` composes `SearchForm` for text filtering, `AddTaskForm` for input handling, a mapped list of `ToDoItem` for rendering items, and `Paginator` for navigation; each handles a single concern like editing in `ToDoItem` or pagination controls in `Paginator`. Reusable primitives such as `Button`, `Input`, `CheckBox`, and `Typography` are composed with props for variants, ensuring consistent styling and incremental development.
+
+#### Feature-Specific Patterns
+
+**Optimistic UI Updates** - Mutations use SWR's `mutate` function to immediately update the local cache before server confirmation, providing responsive feedback. In `addTodo`, `updateTodo`, and `deleteTodo` within `useTodos`, the callback filters or maps the current data array optimistically, followed by API calls and revalidation; `rollbackOnError: true` restores the prior state on failure. This approach reduces perceived latency for actions like deletions or additions, with toast notifications for success/error, while maintaining consistency through revalidation.
+
+**Conditional Rendering** - Components render dynamically based on state using ternary operators and early returns to adapt to conditions without multiple variants. `ToDoList` displays `Loading` during `isLoading`, an error message on `error`, or maps `ToDoItem` over `tasks` otherwise; `ToDoItem` toggles between an `Input` for editing and a `Typography` span for display based on `isEditing`. `Paginator` disables buttons conditionally via `disabled` props. This keeps UIs adaptive to loading, errors, and interactions like filtering or pagination changes.
+
+**State Colocation** - State is placed at the optimal level based on scope: global data like the todos array and pagination is managed in `useTodos` via SWR and local state, while UI-specific state remains in components. `ToDoItem` colocates `title` and `isEditing` for inline editing to avoid prop drilling; `AddTaskForm` and `SearchForm` manage their input values locally with `useState`. This minimizes re-renders, as changes to local state (e.g., typing in `Input`) only affect the relevant subtree, improving performance for interactive elements.
+
+**Derived State with useMemo** - Computed values are memoized to prevent unnecessary recalculations on re-renders. In `useTodos`, `todos` derives from `data` filtered by `searchTerm` using `useMemo` with dependencies `[data, searchTerm]`, ensuring filtering only recomputes when inputs change. This optimization is essential for handling search across paginated data without degrading performance during frequent updates like typing or page navigation.
+
+**Effect Synchronization** - `useEffect` hooks align side effects with state dependencies for seamless behavior. In `useTodos`, a `useEffect` updates `isLoadingMore` when `data` or `size` changes, enabling dynamic `Next` button enabling in `Paginator`. Toast notifications in mutations provide user feedback post-update. These effects ensure declarative coordination, such as resetting pagination or focusing inputs, without manual imperative code in render paths.
+
+**Compound Component Pattern (UI)** - Reusable UI elements like `Button`, `Input`, `CheckBox`, and `Typography` act as configurable primitives via props for flexibility. `Button` accepts `onClick`, `disabled`, `children`, and styling props for variants (e.g., green for add, red for delete); `Input` handles `type`, `value`, `onChange`, and `placeholder`. `Typography` uses `variant` as a polymorphic tag for semantic rendering. This centralizes styling and behavior, promoting consistency across forms, lists, and controls while allowing customization through the `StyleInterface`.

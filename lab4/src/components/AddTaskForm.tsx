@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "./Button";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 import Typography from "./TypographyComponent";
@@ -42,4 +43,4 @@ const AddTaskForm = ({ addTask, ...props }: AddTaskFormProps) => {
     </Typography>
   );
 };
-export default AddTaskForm;
+export default React.memo(AddTaskForm);

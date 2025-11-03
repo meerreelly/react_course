@@ -1,3 +1,4 @@
+import React from "react";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 import Button from "./Button";
 import Typography from "./TypographyComponent";
@@ -56,4 +57,4 @@ const Paginator = ({
     </Typography>
   );
 };
-export default Paginator;
+export default React.memo(Paginator);

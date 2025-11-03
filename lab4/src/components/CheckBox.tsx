@@ -1,3 +1,4 @@
+import React from "react";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 
 interface CheckBoxProps extends StyleInterface {
@@ -19,4 +20,4 @@ const CheckBox = ({
     />
   );
 };
-export default CheckBox;
+export default React.memo(CheckBox);

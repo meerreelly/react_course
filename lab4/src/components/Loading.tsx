@@ -1,6 +1,7 @@
+import React from "react";
 import Typography from "./TypographyComponent";
 
-export default function Loading() {
+const Loading = () => {
   return (
     <Typography
       variant="div"
@@ -14,4 +15,6 @@ export default function Loading() {
       </Typography>
     </Typography>
   );
-}
+};
+
+export default React.memo(Loading);

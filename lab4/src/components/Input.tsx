@@ -1,3 +1,4 @@
+import React from "react";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 
 interface InputProps extends StyleInterface {
@@ -8,7 +9,7 @@ interface InputProps extends StyleInterface {
 }
 
 const Input = ({ ...props }: InputProps) => {
-  return <input {...props}/>;
+  return <input {...props} />;
 };
 
-export default Input;
+export default React.memo(Input);

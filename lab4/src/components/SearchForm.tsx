@@ -1,3 +1,4 @@
+import React from "react";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 import Button from "./Button";
 import Input from "./Input";
@@ -45,4 +46,4 @@ const SearchForm = ({
     </Typography>
   );
 };
-export default SearchForm;
+export default React.memo(SearchForm);

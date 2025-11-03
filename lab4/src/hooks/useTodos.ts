@@ -9,15 +9,24 @@ export const useTodos = () => {
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const url = `https://68df0394898434f41356911d.mockapi.io/todos/todos`;
-  const { data, error, isLoading, mutate } = useSWR<Task[]>(
-    url + `?page=${page}&limit=${size}`,
+  const {
+    data = [],
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<Task[]>(
+    url + `?page=${page}&limit=${size}&title=${searchTerm}`,
     fetcher,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
       refreshInterval: 0,
+      onError: (err) => {
+        console.error("Error fetching todos:", err);
+      },
     }
   );
 
@@ -27,10 +36,8 @@ export const useTodos = () => {
     }
   }, [data, size]);
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
   const todos = useMemo(() => {
-    if (!data) return [];
+    if (!Array.isArray(data)) return [];
     return data.filter((todo) =>
       todo.title.toLowerCase().includes(searchTerm.toLowerCase())
     );

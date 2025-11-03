@@ -1,3 +1,4 @@
+import React from "react";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 
 interface ButtonProps extends StyleInterface {
@@ -13,4 +14,4 @@ const Button = ({ onClick, children, disabled, ...props }: ButtonProps) => {
     </button>
   );
 };
-export default Button;
+export default React.memo(Button);

@@ -11,4 +11,4 @@ const Typography = ({ variant, children, ...props }: TypographyProps) => {
   return <Tag {...props}>{children}</Tag>;
 };
 
-export default Typography;
+export default React.memo(Typography);

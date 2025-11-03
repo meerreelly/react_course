@@ -1,3 +1,4 @@
+import React from "react";
 import Typography from "./TypographyComponent";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 import ToDoItem from "./ToDoItem";
@@ -6,7 +7,6 @@ import Loading from "./Loading";
 import { useTodos } from "../hooks/useTodos";
 import Paginator from "./Paginator";
 import SearchForm from "./SearchForm";
-import type { Task } from "../Types/Task";
 
 const ToDoList = ({ ...props }: StyleInterface) => {
   const {
@@ -30,18 +30,6 @@ const ToDoList = ({ ...props }: StyleInterface) => {
     return <Typography variant="div">Failed to load</Typography>;
   }
 
-  const handleAdd = async (title: string) => {
-    await addTodo(title);
-  };
-
-  const handleDelete = async (id: string) => {
-    await deleteTodo(id);
-  };
-
-  const handleChange = async (todo: Task) => {
-    await updateTodo(todo);
-  };
-
   return (
     <Typography variant="div" {...props}>
       <Typography variant="h1" className="text-white text-3xl mb-4 font-bold">
@@ -52,7 +40,7 @@ const ToDoList = ({ ...props }: StyleInterface) => {
         className="w-full flex mb-4 flrx-row gap-2 justify-center"
       >
         <SearchForm searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <AddTaskForm addTask={(title) => handleAdd(title)} />
+        <AddTaskForm addTask={addTodo} />
       </Typography>
 
       <Typography
@@ -68,8 +56,8 @@ const ToDoList = ({ ...props }: StyleInterface) => {
             <ToDoItem
               key={task._id}
               task={task}
-              onDelete={handleDelete}
-              onChange={handleChange}
+              onDelete={deleteTodo}
+              onChange={updateTodo}
             />
           ))
         )}
@@ -86,4 +74,4 @@ const ToDoList = ({ ...props }: StyleInterface) => {
   );
 };
 
-export default ToDoList;
+export default React.memo(ToDoList);

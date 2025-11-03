@@ -1,3 +1,4 @@
+import React from "react";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 import type { Task } from "../Types/Task";
 import { useState } from "react";
@@ -37,6 +38,10 @@ const ToDoItem = ({ task, onDelete, onChange, ...props }: ToDoItemProps) => {
     if (onDelete) {
       onDelete(task._id);
     }
+  };
+
+  const HandleIsEditing = () => {
+    setIsEditing(true);
   };
 
   return (
@@ -83,7 +88,7 @@ const ToDoItem = ({ task, onDelete, onChange, ...props }: ToDoItemProps) => {
           </Button>
         ) : (
           <Button
-            onClick={() => setIsEditing(true)}
+            onClick={HandleIsEditing}
             className={
               "focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900 me-2"
             }
@@ -104,4 +109,4 @@ const ToDoItem = ({ task, onDelete, onChange, ...props }: ToDoItemProps) => {
   );
 };
 
-export default ToDoItem;
+export default React.memo(ToDoItem);

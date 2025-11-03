@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import type { Task } from "../Types/Task";
 import toast from "react-hot-toast";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -36,18 +36,14 @@ export const useTodos = () => {
     );
   }, [data, searchTerm]);
 
-  const nextPage = () => {
-    setPage((prev) => prev + 1);
-  };
+  const nextPage = useCallback(() => setPage((p) => p + 1), []);
 
-  const prevPage = () => {
-    setPage((prev) => (prev > 1 ? prev - 1 : 1));
-  };
+  const prevPage = useCallback(() => setPage((p) => (p > 1 ? p - 1 : 1)), []);
 
-  const changeSize = (newSize: number) => {
+  const changeSize = useCallback((newSize: number) => {
     setPage(1);
     setSize(newSize);
-  };
+  }, []);
 
   const deleteTodo = async (idToDelete: string) => {
     try {

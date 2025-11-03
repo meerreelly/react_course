@@ -2,7 +2,7 @@ import Button from "./Button";
 import type { StyleInterface } from "../Interfaces/StyleInterface";
 import Typography from "./TypographyComponent";
 import Input from "./Input";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 interface AddTaskFormProps extends StyleInterface {
   addTask: (title: string) => void;
@@ -11,12 +11,13 @@ interface AddTaskFormProps extends StyleInterface {
 const AddTaskForm = ({ addTask, ...props }: AddTaskFormProps) => {
   const [taskTitle, setTaskTitle] = useState("");
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (taskTitle.trim() !== "") {
       await addTask(taskTitle.trim());
       setTaskTitle("");
     }
-  };
+  }, [taskTitle, addTask]);
+
   return (
     <Typography
       variant={"div"}

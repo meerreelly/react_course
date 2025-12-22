@@ -114,39 +114,6 @@ src/main.tsx
 				 └─ <ToastContainer /> (src/components/common/ToastContainer.tsx)
 ```
 
-### High-level diagram (Mermaid)
-```mermaid
-flowchart TD
-	A[src/main.tsx] --> B[App]
-	B --> C[ClerkProvider]
-	C --> D[ThemedApp]
-	D --> E[ThemeProvider + CssBaseline]
-	D --> F[AppRoutes]
-	D --> T[ToastContainer]
-
-	F --> G[BrowserRouter]
-	G --> H[AuthProvider (useClerkAuth)]
-	H --> I[Routes]
-	I --> J[MainLayout]
-	J --> K[Header]
-	J --> L[ActiveOrderBar]
-	J --> M[Outlet]
-
-	M --> R1[/ (Home → HomeContainer)]
-	M --> R2[/offer/:id (OfferDetails → OfferDetailsContainer)]
-	M --> R3[/categories (Categories → CategoriesContainer)]
-	M --> R4[/user/:id (UserProfile → UserProfileContainer)]
-	M --> PR[PrivateRoute]
-	M --> RN[* (NotFound)]
-
-	PR --> P1[/offers/create (CreateOfferContainer)]
-	PR --> P2[/offers/:id/slots (SlotsManagementContainer)]
-	PR --> P3[/deposit (DepositContainer)]
-	PR --> P4[/dashboard (DashboardContainer)]
-	PR --> P5[/orders/:id (OrderContainer)]
-	PR --> P6[/payments (PaymentsContainer)]
-```
-
 ### Full visual diagram (Mermaid)
 ```mermaid
 flowchart TB

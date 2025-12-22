@@ -67,7 +67,7 @@ export const OrderContainer = () => {
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  });
 
   const handleStartOrder = async () => {
     if (!id) return;

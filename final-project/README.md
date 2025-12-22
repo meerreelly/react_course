@@ -150,24 +150,24 @@ flowchart TD
 ### Full visual diagram (Mermaid)
 ```mermaid
 flowchart TB
-	%% This diagram lists all custom pages/components (not MUI primitives).
+%% This diagram lists all custom pages/components (not MUI primitives).
 
-	%% --- Bootstrap / Providers ---
-	MAIN[src/main.tsx] --> APP[App (src/App.tsx)]
-	APP --> CLERK[ClerkProvider]
-	CLERK --> THEMED[ThemedApp]
-	THEMED --> THEME[ThemeProvider + CssBaseline]
-	THEMED --> TOAST[ToastContainer]
-	THEMED --> AR[AppRoutes]
+%% --- Bootstrap / Providers ---
+MAIN["src/main.tsx"] --> APP["App (src/App.tsx)"]
+APP --> CLERK["ClerkProvider"]
+CLERK --> THEMED["ThemedApp"]
+THEMED --> THEME["ThemeProvider + CssBaseline"]
+THEMED --> TOAST["ToastContainer"]
+THEMED --> AR["AppRoutes"]
 
-	%% --- Router / Shell ---
-	AR --> BR[BrowserRouter]
-	BR --> AUTH_P[AuthProvider (useClerkAuth)]
-	AUTH_P --> RRS[Routes]
-	RRS --> LAYOUT[MainLayout]
-	LAYOUT --> HDR[Header]
-	LAYOUT --> AOB[ActiveOrderBar]
-	LAYOUT --> OUT[Outlet]
+%% --- Router / Shell ---
+AR --> BR["BrowserRouter"]
+BR --> AUTH_P["AuthProvider (useClerkAuth)"]
+AUTH_P --> RRS["Routes"]
+RRS --> LAYOUT["MainLayout"]
+LAYOUT --> HDR["Header"]
+LAYOUT --> AOB["ActiveOrderBar"]
+LAYOUT --> OUT["Outlet"]
 
 	%% --- Common components used across pages ---
 	subgraph COMMON[Common UI]

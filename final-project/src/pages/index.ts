@@ -1,0 +1,11 @@
+export { default as Home } from './Home';
+export { default as OfferDetails } from './OfferDetails';
+export { default as CreateOffer } from './CreateOffer';
+export { default as SlotsManagement } from './SlotsManagement';
+export { default as Deposit } from './Deposit';
+export { default as Dashboard } from './Dashboard';
+export { default as OrderPage } from './OrderPage';
+export { default as Payments } from './Payments';
+export { default as UserProfile } from './UserProfile';
+export { default as Categories } from './Categories';
+export { default as NotFound } from './NotFound';
